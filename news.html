@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiju Smart - News Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-width: 140px;    
+            --primary-blue: #4a90e2;   
+            --dark-grey: #435766;      
+            --bg-light: #fdfdfd;       
+            --text-purple: #5c2d91;    
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: var(--bg-light);
+            color: #333;
+        }
+
+        /* --- Unified Slim Navigation Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--dark-grey);
+            color: #ffffff;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 100;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            width: 100%;
+            padding: 20px 15px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .logo-container img {
+            width: 85px; 
+            height: auto;
+            background: white;
+            padding: 5px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .company-name {
+            font-size: 0.7rem;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            color: #e0e6ed;
+            line-height: 1.2;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #c3d1dd;
+            padding: 14px 0;
+            font-size: 0.8rem;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .nav-item i {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: var(--primary-blue);
+            background-color: #ffffff; 
+            font-weight: bold;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        /* --- Main Content Workspace Window --- */
+        .main-content {
+            margin-left: var(--sidebar-width); 
+            flex: 1;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--text-purple);
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        header h2 {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 35px;
+            font-weight: 400;
+        }
+
+        /* --- Expanded Content Display Blocks --- */
+        .content-container {
+            width: 100%;
+            max-width: 1300px; 
+        }
+
+        .feed-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            background: white;
+            border: 1px solid #000;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .news-feed-grid, .featured-section {
+            background: white;
+            border: 1px solid #222;
+            padding: 25px;
+            margin-bottom: 35px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+        }
+
+        .news-feed-grid h3, .featured-section h3 {
+            text-align: center;
+            margin-top: 0;
+            color: var(--text-purple);
+            border-bottom: 1px solid #222;
+            padding-bottom: 12px;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+        }
+
+        /* 3-Column Expanded Feed Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .news-card {
+            background: #fcfcfc;
+            border: 1px solid #ddd;
+            padding: 20px 15px;
+            position: relative;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 240px; /* Increased height boundary for stable vertical rows */
+            box-sizing: border-box;
+        }
+
+        .badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: #fff;
+            border: 1px solid #999;
+            font-size: 0.65rem;
+            padding: 1px 6px;
+            text-transform: lowercase;
+            z-index: 10;
+        }
+
+        /* --- Enforced Sizing Image Containers for Feed Grid --- */
+        .news-image-wrapper {
+            width: 100%;
+            height: 120px;
+            margin: 10px 0;
+            border: 1px solid #eee;
+            background-color: #f5f5f5;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .news-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Prevents image squishing inside layout spaces */
+        }
+
+        /* Placeholder icon matching missing element box */
+        .card-icon-fallback {
+            font-size: 2.2rem;
+            color: var(--primary-blue);
+            margin: auto;
+        }
+
+        .date {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .card-title {
+            text-decoration: none;
+            color: var(--text-purple);
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-top: auto;
+        }
+
+        .card-title:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Featured Content Flex Split Section --- */
+        .featured-flex {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            align-items: flex-start;
+        }
+
+        .featured-image-placeholder {
+            width: 280px;
+            height: 200px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .featured-text {
+            flex: 1; 
+        }
+
+        .featured-text h4 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: var(--text-purple);
+            font-size: 1.4rem;
+            text-decoration: underline;
+        }
+
+        .featured-text p {
+            color: #444;
+            line-height: 1.6;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img src="Aiju logo.png" alt="Aiju Smart Logo">
+            <p class="company-name">Aiju Smart Technologies</p>
+        </div>
+        
+        <div class="nav-links">
+            <a href="index.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="products.html" class="nav-item">
+                <i class="fa-solid fa-tags"></i>
+                <span>Products</span>
+            </a>
+            <a href="about us.html" class="nav-item">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>About</span>
+            </a>
+            <a href="gallery.html" class="nav-item">
+                <i class="fa-solid fa-image"></i>
+                <span>Gallery</span>
+            </a>
+            <a href="news.html" class="nav-item active">
+                <i class="fa-solid fa-newspaper"></i>
+                <span>News</span>
+            </a>
+            <a href="contact.html" class="nav-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <h1>Aiju Smart – News Page .</h1>
+            <h2>2. Column Layout - Articles & Updates</h2>
+        </header>
+
+        <div class="content-container">
+            
+            <div class="feed-actions">
+                <button class="action-btn">Filter by Category</button>
+                <button class="action-btn">Sort by Latest</button>
+            </div>
+
+            <section class="news-feed-grid">
+                <h3>NEWS FEED</h3>
+                <div class="grid-container">
+                    
+                    <div class="news-card">
+                        <span class="badge">breaking</span>
+                        <span class="date">Sep 20, 2023</span>
+                        <div class="news-image-wrapper">
+                            <div class="card-icon-fallback"><i class="fa-solid fa-handshake"></i></div>
+                        </div>
+                        <a href="#" class="card-title">Partnership</a>
+                    </div>
+
+                    <div class="news-card">
+                        <span class="date">Sep 20, 2023</span>
+                        <div class="news-image-wrapper">
+                            <img src="innovation.png" alt="Innovation">
+                        </div>
+                        <a href="#" class="card-title">Innovation Initiative</a>
+                    </div>
+
+                    <div class="news-card">
+                        <span class="date">May 13, 2023</span>
+                        <div class="news-image-wrapper">
+                            <img src="behindScene.jfif" alt="Behind the Scenes">
+                        </div>
+                        <a href="#" class="card-title">Behind the Scenes</a>
+                    </div>
+
+                    <div class="news-card">
+                        <span class="date">Sep 19, 2023</span>
+                        <div class="news-image-wrapper">
+                            <img src="innovation2.jfif" alt="Innovation">
+                        </div>
+                        <a href="#" class="card-title">Innovation</a>
+                    </div>
+
+                    <div class="news-card">
+                        <span class="date">Sep 18, 2023</span>
+                        <div class="news-image-wrapper">
+                            <img src="behind-the-scenes.jfif" alt="Behind the Scenes">
+                        </div>
+                        <a href="#" class="card-title">Behind the Scenes</a>
+                    </div>
+
+                    <div class="news-card">
+                        <span class="date">Sep 18, 2023</span>
+                        <div class="news-image-wrapper">
+                            <img src="Trade show.jfif" alt="Trade Show">
+                        </div>
+                        <a href="#" class="card-title">Trade Show Coverage</a>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="featured-section">
+                <h3>FEATURED ARTICLE</h3>
+                <div class="featured-flex">
+                    <img src="workstation.jfif" alt="Featured Article Image" >
+                        
+                    </div>
+                    <div class="featured-text">
+                        <h4>Summary of Article Description</h4>
+                        <p>Designer and manufacturer of smart wearable devices. The company specializes in smart audio glasses products and it provides one-stop ODM solutions of smart audio glasses to well-known brand customers all over the world with ID design, UI design, embedded software development, cloud technology development, intelligent algorithm, electronic circuit design, structural design, test verification, supply chain management, manufacturing and quality assurance, enabling our clients to get high-quality smart audio glasses ODM cooperation and high-quality technical support and after-sales service.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+</body>
+</html>

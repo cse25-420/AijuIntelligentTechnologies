@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiju Smart - Contact Us Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-width: 140px;    /* Unified slim navigation panel width */
+            --primary-blue: #4a90e2;   /* UI Highlight color */
+            --dark-grey: #435766;      /* Matching your logo column background color */
+            --bg-light: #fdfdfd;       /* Crisp clean canvas background */
+            --text-purple: #5c2d91;    /* Matches the dark purple accent links from your screen snippet */
+            --border-color: #222;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: var(--bg-light);
+            color: #333;
+        }
+
+        /* --- Unified Slim Navigation Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--dark-grey);
+            color: #ffffff;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 100;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            width: 100%;
+            padding: 20px 15px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .logo-container img {
+            width: 85px; /* Keeps the logo cleanly scaled inside the slim column */
+            height: auto;
+            background: white;
+            padding: 5px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .company-name {
+            font-size: 0.7rem;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            color: #e0e6ed;
+            line-height: 1.2;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #c3d1dd; /* Clean off-white look for links */
+            padding: 14px 0;
+            font-size: 0.8rem;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .nav-item i {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        /* Clean states: Removes blue underlines entirely */
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            color: var(--primary-blue);
+            background-color: #ffffff; /* Gives an intentional visual tab break */
+            font-weight: bold;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        /* --- Main Content Workspace Window --- */
+        .main-content {
+            margin-left: var(--sidebar-width); /* Prevents overlapping the left bar */
+            flex: 1;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--text-purple);
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        header h2 {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 35px;
+            font-weight: 400;
+        }
+
+        /* --- Expanded Content Display Blocks --- */
+        .content-container {
+            width: 100%;
+            max-width: 1300px; /* Expands width elegantly across widescreen monitors */
+        }
+
+        /* Large Container Blocks styling matched to News style */
+        .contact-section {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            margin-bottom: 35px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+        }
+
+        .contact-section h3 {
+            text-align: center;
+            margin-top: 0;
+            color: var(--text-purple);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .contact-section h4 {
+            text-align: center;
+            color: #333;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* 3-Column Touch Points Layout Grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .contact-card {
+            background: #fcfcfc;
+            border: 1px solid #ddd;
+            padding: 25px 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 220px;
+            box-sizing: border-box;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            color: var(--text-purple);
+            font-weight: bold;
+            font-size: 1rem;
+            margin: 5px 0;
+        }
+
+        .contact-card p {
+            font-size: 0.95rem;
+            margin: 8px 0;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .contact-card small {
+            font-size: 0.8rem;
+            color: #666;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        /* Standardized styled actions button */
+        .action-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: opacity 0.2s;
+            box-sizing: border-box;
+            text-transform: capitalize;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+
+        .action-btn-outline {
+            background: none;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+        }
+
+        .action-btn-outline:hover {
+            background-color: rgba(74, 144, 226, 0.05);
+            opacity: 1;
+        }
+
+        /* --- Offices & Map Display Sections --- */
+        .map-box-placeholder {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .offices-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .office-card {
+            border: 1px solid #ddd;
+            background: #fcfcfc;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .office-card i.fa-building, 
+        .office-card i.fa-globe {
+            font-size: 2.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+        }
+
+        .office-title {
+            font-weight: bold;
+            color: var(--text-purple);
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .office-card p {
+            font-size: 0.9rem;
+            color: #444;
+            line-height: 1.4;
+            margin: 0 0 15px 0;
+        }
+
+        .office-card .action-btn {
+            margin-top: 8px;
+            max-width: 220px;
+        }
+
+        /* Lead Contact Person Styling inside office card */
+        .lead-contact {
+            border-top: 1px solid #ddd;
+            margin-top: 15px;
+            padding-top: 12px;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lead-contact i {
+            font-size: 1.8rem;
+            color: #777;
+        }
+
+        .lead-info-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lead-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .lead-title {
+            font-size: 0.8rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img src="Aiju logo.png" alt="Aiju Smart Logo">
+            <p class="company-name">Aiju Smart Technologies</p>
+        </div>
+        
+        <div class="nav-links">
+            <a href="index.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="products.html" class="nav-item">
+                <i class="fa-solid fa-tags"></i>
+                <span>Products</span>
+            </a>
+            <a href="about us.html" class="nav-item">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>About</span>
+            </a>
+            <a href="gallery.html" class="nav-item">
+                <i class="fa-solid fa-image"></i>
+                <span>Gallery</span>
+            </a>
+            <a href="news.html" class="nav-item">
+                <i class="fa-solid fa-newspaper"></i>
+                <span>News</span>
+            </a>
+            <a href="contact.html" class="nav-item active">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <h1>Aiju Smart - Contact Us Page .</h1>
+            <h2>2. Column Layout - Contact & Location</h2>
+        </header>
+
+        <div class="content-container">
+
+            <section class="contact-section">
+                <h3>Get In Touch</h3>
+                <div class="contact-grid">
+                    
+                    <div class="contact-card">
+                        <div>
+                            <div class="card-icon"><i class="fa-solid fa-paper-plane"></i></div>
+                            <div class="card-title">SEND US AN EMAIL</div>
+                            <p>miaozhuang@aijusmart.com</p>
+                            <p>yueqing@aijusmart.com</p>
+                            <small>Expect a reply within 24 hours</small>
+                        </div>
+                        <button class="action-btn">Submit Form</button>
+                    </div>
+
+                    <form class="row row-cols-lg-auto g-3 align-items-center">
+  <div class="col-12">
+    <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
+    <div class="input-group">
+      <div class="input-group-text">@</div>
+      <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username">
+    </div>
+  </div>
+
+  <div class="col-12">
+    <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+    <select class="form-select" id="inlineFormSelectPref">
+      <option selected>Choose...</option>
+      <option value="1">Smartwatch</option>
+      <option value="2">Ai glasses</option>
+      <option value="3">Fitness band</option>
+      <option value="4">posture corrector</option>
+      <option value="5">Vr goggles</option>
+      <option value="6">Smart insoles</option>
+      <option value="7">GPS tracker</option>
+      <option value="8">Hearables</option>  
+      <option value="9">Sleep tracker</option>    
+    </select>
+  </div>
+
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="inlineFormCheck">
+      <label class="form-check-label" for="inlineFormCheck">
+        Remember me
+      </label>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+                    <div class="contact-card">
+                        <div>
+                            <div class="card-icon"><i class="fa-solid fa-phone-flip"></i></div>
+                            <div class="card-title">CALL OUR TEAM</div>
+                            <p>+1 (800) 555-0199</p>
+                            <small>Available Mon-Fri 9am-5pm EST</small>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div>
+                            <div class="card-icon"><i class="fa-solid fa-comments"></i></div>
+                            <div class="card-title">LIVE CHAT SUPPORT</div>
+                            <p>Speak with an agent now.</p>
+                            <small>Real-time assistance</small>
+                        </div>
+                        <button class="action-btn">Start Chat</button>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="contact-section">
+                <h3>Our Locations</h3>
+                <h4>HEADQUARTERS MAP</h4>
+                
+                <div class="map-box-placeholder">
+                    📍 [Map View Integration Area]
+                </div>
+
+                <div class="offices-grid">
+                    
+                    <div class="office-card">
+                        <i class="fa-solid fa-building"></i>
+                        <div class="office-title">AIJU SMART OFFICE</div>
+                        <p>708, Block E, Taojindi Building, Longhua District, Shenzhen, Guangdong,China</p>
+                        <button class="action-btn action-btn-outline">Get Directions</button>
+                        <button class="action-btn action-btn-outline">View on Map</button>
+                        <button class="action-btn">Contact This Office</button>
+                    </div>
+
+                    <div class="office-card">
+                        <i class="fa-solid fa-globe"></i>
+                        <div class="office-title">GLOBAL SALES OFFICE</div>
+                        <p>708, Block E, Taojindi Building, Longhua District, Shenzhen, Guangdong, China</p>
+                        
+                        <div class="lead-contact">
+                            <i class="fa-solid fa-circle-user"></i>
+                            <div class="lead-info-text">
+                                <span class="lead-name">Zhuang Miao</span>
+                                <span class="lead-title">Lead Contact</span>
+                            </div>
+                        </div>
+                        <button class="action-btn action-btn-outline">View on Map</button>
+                        <button class="action-btn">Contact This Office</button>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+</body>
+</html>
