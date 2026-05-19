@@ -1,0 +1,15 @@
+<!Doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiju Smart </title> 
+    <style> styling goes here </style>
+</head>
+<body>  
+    <h1> Visible content goes here </h1>
+    <slider> slider content</slider>
+    <p> This is a paragraph </p> 
+    <main class= "main content goes here">
+</body>
+</html>
