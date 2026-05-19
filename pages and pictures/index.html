@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiju Smart - Home Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 140px;    
+            --primary-blue: #4a90e2;   
+            --dark-grey: #435766;      
+            --bg-light: #fdfdfd;       
+            --text-purple: #5c2d91;    
+            --border-color: #222;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: var(--bg-light);
+            color: #333;
+        }
+
+        /* --- Unified Slim Navigation Sidebar --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--dark-grey);
+            color: #ffffff;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 100;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            width: 100%;
+            padding: 20px 15px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .logo-container img {
+            width: 85px; /* Keeps the logo cleanly scaled inside the slim column */
+            height: auto;
+            background: white;
+            padding: 5px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .company-name {
+            font-size: 0.7rem;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            color: #e0e6ed;
+            line-height: 1.2;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #c3d1dd; 
+            padding: 14px 0;
+            font-size: 0.8rem;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .nav-item i {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        /* Removes blue link underlines entirely */
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: var(--primary-blue);
+            background-color: #ffffff; 
+            font-weight: bold;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        /* --- Main Content Workspace Window --- */
+        .main-content {
+            margin-left: var(--sidebar-width); /* Prevents overlapping the left bar */
+            flex: 1;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .main-content h1 {
+            font-size: 2.2rem;
+            color: var(--text-purple);
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .main-content h2 {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 35px;
+            font-weight: 400;
+        }
+
+        /* --- Expanded Content Display Blocks --- */
+        .content-container {
+            width: 100%;
+            max-width: 1300px; /* Expands width elegantly across widescreen monitors */
+        }
+
+        /* Large Container Box styling matched to application standard */
+        .home-section {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            margin-bottom: 35px;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+        }
+
+        .home-section h3 {
+            text-align: center;
+            margin-top: 0;
+            color: var(--text-purple);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* --- Optimized Slider Styling --- */
+        .carousel-container {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .carousel-item {
+            height: 400px; /* Rigorously freezes slide bounds so heights stay identical */
+            background-color: #f7f7f7;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Assures images completely fit the target canvas size without distortion */
+            background: #f0f0f0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* --- 3-Product Display Grid Showcase --- */
+        .product-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #fcfcfc;
+            box-sizing: border-box;
+            justify-content: space-between;
+            min-height: 380px;
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 150px;
+            border: 1px dashed #bbb;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Enforces consistency for showcase images */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .product-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .btn-specs {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            background: white;
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            border-radius: 4px;
+        }
+
+        .btn-specs:hover {
+            background-color: rgba(74, 144, 226, 0.05);
+        }
+
+        .action-group {
+            width: 100%;
+            border: 1px solid #ddd;
+            padding: 12px 10px;
+            font-size: 0.85rem;
+            text-align: center;
+            background: #fff;
+            box-sizing: border-box;
+            color: #666;
+        }
+
+        .action-group span {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--text-purple);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img src="Aiju logo.png" alt="Aiju Smart Logo">
+            <p class="company-name">Aiju Smart Technologies</p>
+        </div>
+        
+        <div class="nav-links">
+            <a href="index.html" class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="products.html" class="nav-item">
+                <i class="fa-solid fa-tags"></i>
+                <span>Products</span>
+            </a>
+            <a href="about us.html" class="nav-item">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>About</span>
+            </a>
+            <a href="gallery.html" class="nav-item">
+                <i class="fa-solid fa-image"></i>
+                <span>Gallery</span>
+            </a>
+            <a href="news.html" class="nav-item">
+                <i class="fa-solid fa-newspaper"></i>
+                <span>News</span>
+            </a>
+            <a href="contact.html" class="nav-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <h1>Aiju Smart – Home Page .</h1>
+            <h2>2. Column Layout - Main Dashboard & Gateways</h2>
+        </header>
+
+        <div class="content-container">
+
+            <section class="home-section">
+                <h3>Featured Highlights</h3>
+                
+                <div id="carouselExampleIndicators" class="carousel slide carousel-container" data-bs-ride="carousel" data-bs-interval="10000">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="Shenzhen Smart City.jfif" alt="Shenzhen Smart City">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="AI watch.jfif" alt="AI watch">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="AI Smart Glasses.jfif" alt="AI Smart Glasses">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </section> <section class="home-section">
+                <h3>Featured Hardware Showcase</h3>
+                <div class="product-showcase-grid">
+                    
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="smartwatch.png" alt="Smartwatch V4.2">
+                        </div>
+                        <div class="product-title">Smartwatch V4.2</div>
+                        <div style="width: 100%;">
+                            <button class="btn-specs" onclick="window.location.href='products.html'">Tech Specs</button>
+                            <div class="action-group">
+                                <span>Action Buttons</span>
+                                (Request Quote, View Details)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="hearables.png" alt="Wireless Hearables">
+                        </div>
+                        <div class="product-title">Wireless Hearables</div>
+                        <div style="width: 100%;">
+                            <button class="btn-specs" onclick="window.location.href='products.html'">Tech Specs</button>
+                            <div class="action-group">
+                                <span>Action Buttons</span>
+                                (Request Quote, View Details)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="fitness-band.png" alt="Smart Fitness Band">
+                        </div>
+                        <div class="product-title">Smart Fitness Band</div>
+                        <div style="width: 100%;">
+                            <button class="btn-specs" onclick="window.location.href='products.html'">Tech Specs</button>
+                            <div class="action-group">
+                                <span>Action Buttons</span>
+                                (Request Quote, View Details)
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
